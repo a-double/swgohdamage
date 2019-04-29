@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+
+<title>Swgoh Comparison Tool</title>
+
+<style>
+.sets {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+.set {
+	padding: 10px 20px;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+li {
+	margin: 0 0 5px;
+}
+
+.expected {
+	display: block;
+	margin-top: 15px;
+	font-weight: bold;
+}
+
+.results {
+	padding: 10px 20px;
+}
+
+.winner-stuff {
+	margin-top: 15px;
+}
+
+.--winner {
+	background-color: rgba(0, 194, 0, 0.2);
+}
+
+h2 {
+	margin: 0 0 10px;
+	padding: 0;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Swgoh Damage Calculator</h1>
+
+<div class="sets">
+	<div id="set-1" class="set">
+		<h2>Set 1</h2>
+
+		<ul>
+			<li><label>Crit Chance: <input type="number" class="val--cc" id="set-1--cc" min="0" step="0.01">%</label></li>
+			<li><label>Crit Damage: <input type="number" class="val--cd" id="set-1--cd" min="0" step="0.01">%</label></li>
+			<li><label>Offense: <input type="number" class="val--off" id="set-1--off" min="0"></label></li>
+		</ul>
+
+		<div class="expected">Average Damage: <span id="avg-1"></span></div>
+	</div>
+
+	<div id="set-2" class="set">
+		<h2>Set 2</h2>
+
+		<ul>
+			<li><label>Crit Chance: <input type="number" class="val--cc" id="set-2--cc" min="0" step="0.01">%</label></li>
+			<li><label>Crit Damage: <input type="number" class="val--cd" id="set-2--cd" min="0" step="0.01">%</label></li>
+			<li><label>Offense: <input type="number" class="val--off" id="set-2--off" min="0"></label></li>
+		</ul>
+
+		<div class="expected">Average Damage: <span id="avg-2"></span></div>
+	</div>
+</div>
+
+<div class="results">
+	<button type="button" id="calculate">Compare</button>
+
+	<div class="winner-stuff">
+		The winner is... <span id="winner"></span>
+	</div>
+</div>
+
+<script>
+function getAverageDamage( el ) {
+	var cc = Number( el.querySelector( '.val--cc' ).value ) / 100,
+		cd = Number( el.querySelector( '.val--cd' ).value ) / 100,
+		off = Number( el.querySelector( '.val--off' ).value );
+	
+	return off * ( 1 - cc ) + off * ( cc * cd );
+}
+
+// 6651
+// 36.95%
+// 192%
+
+// 6846
+// 40.29%
+// 150%
+
+function getComparisons() {
+	var first = document.getElementById( 'set-1' ),
+		second = document.getElementById( 'set-2' );
+	
+	var firstAvg = getAverageDamage( first ),
+		secondAvg = getAverageDamage( second );
+	
+	var resultsText = document.getElementById( 'winner' ),
+		set1Text = document.getElementById( 'avg-1' ),
+		set2Text = document.getElementById( 'avg-2' );
+	
+	first.classList.remove( '--winner' );
+	second.classList.remove( '--winner' );
+	
+	set1Text.innerHTML = Math.round( firstAvg * 100 ) / 100;
+	set2Text.innerHTML = Math.round( secondAvg * 100 ) / 100;
+	
+	if ( firstAvg == secondAvg ) {
+		resultsText.innerHTML = 'Neither. Doesn\'t matter. Do whatever.';
+	} else if ( firstAvg > secondAvg ) {
+		first.classList.add( '--winner' );
+		resultsText.innerHTML = 'The first one!';
+	} else {
+		second.classList.add( '--winner' );
+		resultsText.innerHTML = 'The second one!';
+	}
+}
+
+function setListeners() {
+	document.getElementById( 'calculate' ).addEventListener( 'click', function() {
+		getComparisons();
+	}, false );
+}
+
+void function() {
+	setListeners();
+}();
+</script>
+
+</body>
+</html>
