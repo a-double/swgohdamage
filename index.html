@@ -3,17 +3,33 @@
 <head>
 
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
 
 <title>Swgoh Comparison Tool</title>
 
 <style>
+body {
+	margin: 0;
+	padding: 0 20px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+}
+
 .sets {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
+	width: 100%;
+	max-width: 600px;
+	margin: 0 -20px;
+	overflow-x: hidden;
 }
 .set {
+	flex: 1 1 50%;
 	padding: 10px 20px;
+	font-weight: 300;
 }
 
 ul {
@@ -23,21 +39,33 @@ ul {
 }
 
 li {
-	margin: 0 0 5px;
+	margin: 0 0 10px;
+}
+
+label {
+	display: block;
+}
+
+input[type="number"] {
+	width: calc(100% - 2em);
+	margin-right: 4px;
 }
 
 .expected {
 	display: block;
 	margin-top: 15px;
-	font-weight: bold;
+	font-size: 12px;
+	font-weight: 700;
 }
 
 .results {
-	padding: 10px 20px;
+	padding: 10px 0;
 }
 
 .winner-stuff {
-	margin-top: 15px;
+	margin-top: 30px;
+	font-size: 18px;
+	font-weight: 700;
 }
 
 .--winner {
@@ -47,6 +75,8 @@ li {
 h2 {
 	margin: 0 0 10px;
 	padding: 0;
+	font-size: 18px;
+	font-weight: 700;
 }
 </style>
 
@@ -60,9 +90,9 @@ h2 {
 		<h2>Set 1</h2>
 
 		<ul>
-			<li><label>Crit Chance: <input type="number" class="val--cc" id="set-1--cc" min="0" step="0.01">%</label></li>
-			<li><label>Crit Damage: <input type="number" class="val--cd" id="set-1--cd" min="0" step="0.01">%</label></li>
-			<li><label>Offense: <input type="number" class="val--off" id="set-1--off" min="0"></label></li>
+			<li><label for="set-1--cc">Crit Chance:</label> <input type="number" class="val--cc" id="set-1--cc" min="0" step="0.01">%</li>
+			<li><label for="set-1--cd">Crit Damage:</label> <input type="number" class="val--cd" id="set-1--cd" min="0" step="0.01">%</li>
+			<li><label for="set-1--off">Offense:</label> <input type="number" class="val--off" id="set-1--off" min="0"></li>
 		</ul>
 
 		<div class="expected">Average Damage: <span id="avg-1"></span></div>
@@ -72,9 +102,9 @@ h2 {
 		<h2>Set 2</h2>
 
 		<ul>
-			<li><label>Crit Chance: <input type="number" class="val--cc" id="set-2--cc" min="0" step="0.01">%</label></li>
-			<li><label>Crit Damage: <input type="number" class="val--cd" id="set-2--cd" min="0" step="0.01">%</label></li>
-			<li><label>Offense: <input type="number" class="val--off" id="set-2--off" min="0"></label></li>
+			<li><label for="set-2--cc">Crit Chance:</label> <input type="number" class="val--cc" id="set-2--cc" min="0" step="0.01">%</li>
+			<li><label for="set-2--cd">Crit Damage:</label> <input type="number" class="val--cd" id="set-2--cd" min="0" step="0.01">%</li>
+			<li><label for="set-2--off">Offense:</label> <input type="number" class="val--off" id="set-2--off" min="0"></li>
 		</ul>
 
 		<div class="expected">Average Damage: <span id="avg-2"></span></div>
